@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Hospital>
+
+@{
+    ViewBag.Title = "Hospital List";
+}
+
+Enter Hospital Name:
+@if (ViewBag.HosName != "")
+{
+    <input type="text" name="txtsearch" id="txtsearch" value="@ViewBag.HosName" />
+}
+else
+{
+    <input type="text" name="txtsearch" id="txtsearch" value="" />
+
+}
+<input type="button" value="Search" name="btnshow" id="btnshow" />
+
+@if (!Model.Any())
+{
+    <h1 class="text-center">There are no Hospitals.</h1>
+    <a href="/Hospital/Index">Back to list</a>
+}
+else
+{
+
+
+
+    <div class="card-deck">
+        @foreach (var hospital in Model)
+        {
+            var photoPath = "~/Images/" + (hospital.Photo ?? "noimage.jpg");
+
+            <div class="card m-3" style="min-width: 18rem; max-width:30.5%;">
+
+
+                <img class="card-img-top imageThumbnail" src="@photoPath"
+                     asp-append-version="true" />
+                <div class="card-header">
+                    <a asp-controller="hospital" asp-action="details"
+                       asp-route-HospitalId="@hospital.HospitalId"
+                       >
+                        <h3>@hospital.Name</h3>
+                    </a>
+                    <h4>@hospital.City</h4>
+                    <h4>@hospital.Email</h4>
+                </div>
+               
+            </div>
+        }
+    </div>
+
+}
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $("#btnshow").click(function () {
+                var url = $("#txtsearch").val();
+
+                if (url) {
+                    window.location = "/Hospital/Index?name=" + url;
+                }
+                else {
+                    window.location = "/Hospital/Index";
+                }
+
+                return false;
+            });
+
+
+            
+
+        });
+
+
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@model Hospital
+
+@{
+    ViewBag.Title = "Hospital Details";
+    var photoPath = "~/Images/" + (Model.Photo ?? "noimage.jpg");
+}
+
+<div class="row justify-content-center m-3">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                <h1>@Model.Name</h1>
+                <h3>@Model.Mobile</h3>
+            </div>
+
+            <div class="card-body text-center">
+                <img class="card-img-top" src="@photoPath" asp-append-version="true" />
+
+                <h4>Hospital ID : @Model.HospitalId</h4>
+                <h4>Email : @Model.Email</h4>
+                <h4>City : @Model.City</h4>
+                <h4>Description : @Model.Description</h4>
+
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="hospital" asp-action="index"
+                   class="btn btn-primary">Back</a>
+                <a asp-action="edit" asp-controller="hospital"
+                   asp-route-id="@Model.HospitalId"
+                   class="btn btn-primary">Edit</a>
+                <a asp-action="delete" asp-controller="hospital" id=""
+                   asp-route-id="@Model.HospitalId" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
